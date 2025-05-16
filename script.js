@@ -101,24 +101,111 @@ function toggleInstructions() {
   showInstructions();
 }
 
+// Function to change instruction panel
+function changeInstructionPanel(panelNumber) {
+  // Update active panel
+  document.querySelectorAll('.instruction-panel').forEach(panel => {
+    panel.classList.remove('active');
+  });
+  const activePanel = document.querySelector(`.instruction-panel[data-panel="${panelNumber}"]`);
+  activePanel.classList.add('active');
+  
+  // Update active step
+  document.querySelectorAll('.instruction-step').forEach(step => {
+    step.classList.remove('active');
+  });
+  document.querySelector(`.instruction-step[data-step="${panelNumber}"]`).classList.add('active');
+  
+  // Update mobile indicator dots
+  document.querySelectorAll('.indicator-dot').forEach(dot => {
+    dot.classList.remove('active');
+  });
+  document.querySelector(`.indicator-dot[data-dot="${panelNumber}"]`).classList.add('active');
+  
+  // On mobile, scroll content to top and ensure buttons remain visible
+  if (window.innerWidth <= 768) {
+    const contentEl = activePanel.querySelector('.instruction-panel-content');
+    if (contentEl) {
+      contentEl.scrollTop = 0;
+    }
+    
+    // Flash navigation buttons to draw attention
+    const navButtons = document.querySelectorAll('.nav-btn');
+    navButtons.forEach(btn => {
+      btn.classList.add('flash-highlight');
+      setTimeout(() => {
+        btn.classList.remove('flash-highlight');
+      }, 500);
+    });
+  }
+}
+
+// Initialize instruction panel step click handlers
+function initInstructionSteps() {
+  document.querySelectorAll('.instruction-step').forEach(step => {
+    const stepNumber = step.getAttribute('data-step');
+    step.addEventListener('click', () => {
+      changeInstructionPanel(stepNumber);
+    });
+  });
+}
+
 function showInstructions() {
   var modal = document.getElementById('instructionsModal');
   modal.style.display = 'block';
+  // Reset any previous fade-out
+  modal.classList.remove('fade-out');
+  
+  // 修正手機版樣式
+  if (window.innerWidth <= 768) {
+    document.body.style.overflow = 'hidden'; // 防止背景滾動
+    modal.style.overflowY = 'auto';
+    
+    // Create a temporary nav helper tip that appears after a delay
+    setTimeout(() => {
+      const helperTip = modal.querySelector('.nav-helper-tip');
+      if (helperTip) {
+        helperTip.style.opacity = '1';
+      }
+    }, 1500);
+  }
+  
+  // Initialize instruction steps
+  initInstructionSteps();
+  
+  // Reset to first panel
+  changeInstructionPanel(1);
 }
 
 function closeInstructions() {
   var modal = document.getElementById('instructionsModal');
-  modal.style.display = 'none';
+  // Add fade-out animation
+  modal.classList.add('fade-out');
+  // Wait for animation to complete before hiding
+  setTimeout(() => {
+    modal.style.display = 'none';
+    modal.classList.remove('fade-out');
+    // 恢復滾動
+    document.body.style.overflow = '';
+  }, 300);
 }
 
 function showDisclaimer() {
   var modal = document.getElementById('disclaimerModal');
   modal.style.display = 'block';
+  // Reset any previous fade-out
+  modal.classList.remove('fade-out');
 }
 
 function closeDisclaimer() {
   var modal = document.getElementById('disclaimerModal');
-  modal.style.display = 'none';
+  // Add fade-out animation
+  modal.classList.add('fade-out');
+  // Wait for animation to complete before hiding
+  setTimeout(() => {
+    modal.style.display = 'none';
+    modal.classList.remove('fade-out');
+  }, 300);
 }
 
 function showInvitationValidationAnimation() {
@@ -2365,7 +2452,9 @@ function showSchoolComparison() {
     
     modal.innerHTML = `
       <div class="modal-content comparison-modal-content">
-        <span class="close" onclick="closeComparisonModal()">&times;</span>
+        <button class="new-close-button" onclick="closeComparisonModal()">
+          <i class="fas fa-times"></i>
+        </button>
         <h2><i class="fas fa-balance-scale icon"></i> 學校比較</h2>
         <div id="comparisonContainer"></div>
         <button class="confirm-button" onclick="closeComparisonModal()">
@@ -3267,7 +3356,9 @@ function showSchoolDetails(schoolName) {
   // Enhanced school details with more information and visualization
   modal.innerHTML = `
     <div class="modal-content" style="max-width: 800px;">
-      <span class="close" onclick="closeSchoolDetailsModal()">&times;</span>
+      <button class="new-close-button" onclick="closeSchoolDetailsModal()">
+        <i class="fas fa-times"></i>
+      </button>
       <h2 style="color: var(--primary-color); display: flex; align-items: center; gap: 10px;">
         <i class="fas fa-school"></i> ${school.name} 詳細資訊
       </h2>
@@ -3821,7 +3912,9 @@ function showAdvancedComparisonView() {
   
   modal.innerHTML = `
     <div class="modal-content" style="max-width: 90%; width: 1000px; max-height: 85vh; overflow-y: auto;">
-      <span class="close" onclick="closeAdvancedComparisonModal()">&times;</span>
+      <button class="new-close-button" onclick="closeAdvancedComparisonModal()">
+        <i class="fas fa-times"></i>
+      </button>
       <h2 style="color: var(--primary-color); display: flex; align-items: center; gap: 10px;">
         <i class="fas fa-chart-bar"></i> 進階學校比較分析
       </h2>
@@ -4223,3 +4316,38 @@ function closeMenu() {
     }
   }, 300);
 }
+
+// 為分析區域選擇器添加動畫效果
+document.addEventListener('DOMContentLoaded', function() {
+  const regionInputs = document.querySelectorAll('.region-input');
+  
+  regionInputs.forEach(input => {
+    input.addEventListener('change', function() {
+      if (this.checked) {
+        // 獲取當前選中的區域圖標
+        const regionIcon = this.nextElementSibling.querySelector('.region-icon');
+        
+        // 添加並在動畫結束後移除動畫類
+        regionIcon.classList.add('pulse-animation');
+        setTimeout(() => {
+          regionIcon.classList.remove('pulse-animation');
+        }, 800);
+        
+        // 添加波紋效果
+        addRippleEffect(this.nextElementSibling);
+      }
+    });
+  });
+  
+  // 添加波紋效果函數
+  function addRippleEffect(element) {
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple-effect';
+    element.appendChild(ripple);
+    
+    // 動畫完成後移除波紋元素
+    setTimeout(() => {
+      ripple.remove();
+    }, 800);
+  }
+});
