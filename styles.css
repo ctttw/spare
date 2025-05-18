@@ -1490,33 +1490,7 @@ button:hover:before {
   }
 }
 
-/* Dark mode樣式 */
-.dark-mode {
-  --background-color: #2b2d42;
-  --text-color: #edf2f4;
-  --card-background: #3a3f5c;
-  --shadow-color: rgba(0, 0, 0, 0.5);
-  --input-background: #4a4e69;
-  --border-color: #4a4e69;
-  transition: background-color 0.5s ease, color 0.5s ease;
-}
-
-.dark-mode .container {
-  background: var(--card-background);
-  box-shadow: 0 10px 30px var(--shadow-color);
-}
-
-.dark-mode select,
-.dark-mode input[type="text"] {
-  background-color: var(--input-background);
-  color: var(--text-color);
-  border-color: var(--border-color);
-}
-
-.dark-mode select option {
-  background-color: var(--input-background);
-  color: var(--text-color);
-}
+/* 舊的深色模式樣式已移除，新樣式在下面 */
 
 .dark-mode-toggle {
   position: fixed;
@@ -1599,46 +1573,12 @@ button:hover:before {
     inset 0 0 0 rgba(0, 0, 0, 0.3);
 }
 
-/* Dark mode hover effects */
-.dark-mode button:hover,
-.dark-mode .instruction-toggle:hover,
-.dark-mode .disclaimer-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-}
-
-/* Dark mode form elements */
-.dark-mode .form-group label {
-  color: var(--text-color);
-}
-
-.dark-mode select:focus,
-.dark-mode input[type="text"]:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.3);
-}
-
 /* Smooth transition for all elements */
 * {
   transition: background-color 0.5s ease,
               color 0.5s ease,
               border-color 0.5s ease,
               box-shadow 0.5s ease;
-}
-
-/* Dark mode hover feedback */
-.dark-mode button:active,
-.dark-mode .dark-mode-toggle:active {
-  transform: scale(0.98);
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-/* Enhanced readability in dark mode */
-.dark-mode h1,
-.dark-mode h2,
-.dark-mode h3 {
-  color: #4a69bd;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* ...rest of existing code... */
@@ -6426,4 +6366,253 @@ button:hover:before {
   100% {
     background: radial-gradient(circle at center, rgba(17, 138, 178, 0.08) 30%, rgba(255, 255, 255, 0));
   }
+}
+
+/* 優化深色模式樣式 */
+.dark-mode {
+  --background-color: #121212;
+  --text-color: #f5f5f7;
+  --card-background: #1e1e2e;
+  --shadow-color: rgba(0, 0, 0, 0.7);
+  --input-background: #2d2d3f;
+  --border-color: #3f3f5f;
+  --primary-color: #74b9ff;
+  --secondary-color: #6c5ce7;
+  --accent-color: #ff7675;
+  --success-color: #00b894;
+  --primary-rgb: 116, 185, 255;
+  --menu-background: rgba(30, 30, 46, 0.98);
+  --menu-text: #f5f5f7;
+  --menu-hover: rgba(116, 185, 255, 0.2);
+  --menu-active: rgba(116, 185, 255, 0.3);
+  --menu-border: rgba(116, 185, 255, 0.15);
+  --menu-icon: rgba(116, 185, 255, 0.8);
+  --menu-category: rgba(245, 245, 247, 0.7);
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* 背景與容器 */
+.dark-mode body {
+  background-image: linear-gradient(120deg, #121212 0%, #1a1a2e 100%);
+}
+
+.dark-mode .container {
+  background: var(--card-background);
+  box-shadow: 0 10px 30px var(--shadow-color), 
+              0 0 0 1px rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* 表單元素優化 */
+.dark-mode select,
+.dark-mode input[type="text"] {
+  background-color: var(--input-background);
+  color: var(--text-color);
+  border-color: var(--border-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode select option {
+  background-color: var(--input-background);
+  color: var(--text-color);
+}
+
+.dark-mode select:focus,
+.dark-mode input[type="text"]:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.3);
+  background-color: rgba(45, 45, 63, 0.9);
+}
+
+/* 按鈕樣式優化 */
+.dark-mode button {
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3);
+}
+
+.dark-mode button:hover,
+.dark-mode .instruction-toggle:hover,
+.dark-mode .disclaimer-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(var(--primary-rgb), 0.4);
+}
+
+.dark-mode button:active,
+.dark-mode .dark-mode-toggle:active {
+  transform: scale(0.98);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* 標題和文字優化 */
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3 {
+  color: var(--primary-color);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode h1::after {
+  background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+  opacity: 0.8;
+}
+
+.dark-mode label {
+  color: var(--text-color);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .form-group label {
+  color: var(--text-color);
+}
+
+/* 結果區域和卡片優化 */
+.dark-mode #results, 
+.dark-mode #instructions {
+  background: rgba(30, 30, 46, 0.6);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode #results:hover, 
+.dark-mode #instructions:hover {
+  background: rgba(30, 30, 46, 0.8);
+}
+
+.dark-mode .result-item, 
+.dark-mode .instruction-item {
+  background: rgba(45, 45, 63, 0.6);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  border-left: 3px solid var(--primary-color);
+}
+
+.dark-mode .result-item:hover, 
+.dark-mode .instruction-item:hover {
+  background: rgba(45, 45, 63, 0.8);
+  transform: translateX(3px);
+}
+
+/* 圖標色彩優化 */
+.dark-mode .icon {
+  color: var(--primary-color);
+}
+
+/* 滾動條優化 */
+.dark-mode *::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dark-mode *::-webkit-scrollbar-track {
+  background: rgba(30, 30, 46, 0.6);
+}
+
+.dark-mode *::-webkit-scrollbar-thumb {
+  background: rgba(var(--primary-rgb), 0.5);
+  border-radius: 4px;
+}
+
+.dark-mode *::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--primary-rgb), 0.7);
+}
+
+/* 深色模式切換按鈕 */
+.dark-mode .dark-mode-toggle {
+  background: linear-gradient(145deg, #1e1e2e, #2d2d3f);
+  color: var(--primary-color);
+  box-shadow: 
+    -8px -8px 15px rgba(35, 35, 45, 0.1),
+    8px 8px 15px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 rgba(35, 35, 45, 0.1),
+    inset 0 0 0 rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .dark-mode-toggle:hover {
+  transform: scale(1.1) rotate(8deg);
+  color: #ffeaa7;
+  box-shadow: 
+    -12px -12px 20px rgba(35, 35, 45, 0.2),
+    12px 12px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* 模態窗優化 */
+.dark-mode .modal-content {
+  background-color: var(--card-background);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode .new-close-button,
+.dark-mode .close, 
+.dark-mode .modal-close {
+  background: rgba(45, 45, 63, 0.6);
+  color: var(--text-color);
+}
+
+.dark-mode .new-close-button:hover,
+.dark-mode .close:hover, 
+.dark-mode .modal-close:hover {
+  background: rgba(var(--primary-rgb), 0.2);
+  color: var(--primary-color);
+}
+
+/* 區域選擇器優化 */
+.dark-mode .region-category {
+  background-color: rgba(var(--primary-rgb), 0.1);
+  color: var(--primary-color);
+}
+
+.dark-mode .preparing-category {
+  background-color: rgba(255, 107, 107, 0.1);
+  color: #ff7675;
+}
+
+.dark-mode .region-label {
+  background: rgba(45, 45, 63, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dark-mode .region-input:checked + .region-label {
+  background: rgba(var(--primary-rgb), 0.2);
+  border-color: var(--primary-color);
+}
+
+.dark-mode .region-option:hover .region-label {
+  background: rgba(45, 45, 63, 0.8);
+  transform: translateY(-3px);
+}
+
+/* 版權資訊 */
+.dark-mode .copyright {
+  color: rgba(245, 245, 247, 0.7);
+}
+
+/* 職業群別選擇器 */
+.dark-mode .vocational-group-label {
+  background: rgba(45, 45, 63, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dark-mode .vocational-group-input:checked + .vocational-group-label {
+  background: rgba(var(--primary-rgb), 0.2);
+  border-color: var(--primary-color);
+}
+
+.dark-mode .vocational-group-option:hover .vocational-group-label {
+  background: rgba(45, 45, 63, 0.8);
+}
+
+/* 評分區域 */
+.dark-mode #ratingSection {
+  background: rgba(45, 45, 63, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dark-mode #starsContainer .star {
+  color: rgba(245, 245, 247, 0.3);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode #starsContainer .star.active,
+.dark-mode #starsContainer .star:hover {
+  color: #ffeaa7;
+  text-shadow: 0 0 15px rgba(255, 234, 167, 0.5);
 }
