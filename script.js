@@ -449,6 +449,11 @@ async function logUserActivity(action, details = {}) {
 }
 
 async function analyzeScores() {
+  // Show confirmation dialog first
+  if (!confirm('提醒：分析結果僅供參考。是否繼續？')) {
+    return;
+  }
+
   const analyzeButton = document.getElementById('analyzeButton');
   if (analyzeButton) {
     analyzeButton.disabled = true;
